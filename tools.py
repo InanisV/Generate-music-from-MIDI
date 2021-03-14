@@ -5,14 +5,14 @@ from music21 import converter, instrument, note, chord, stream
 
 
 class Tools:
-    MIDI_path = "Pokemon MIDIs copy/*.mid"
+    MIDI_path = "Pokemon MIDIs/*.mid"
 
     @staticmethod
-    def get_notes():
+    def get_notes(MIDI_path):
         """ Get all the notes and chords from the midi files """
         notes = []
 
-        for file in glob.glob(Tools.MIDI_path):
+        for file in glob.glob(MIDI_path):
             midi = converter.parse(file)
 
             print("Parsing %s" % file)
@@ -67,6 +67,49 @@ class Tools:
                                               max(network_output)+1)
 
         return (network_input, network_output)
+    
+    @staticmethod
+    def get_note_dicts(notes):
+        """ Prepare the sequences used by the Neural Network """
+        # get all pitch names
+        pitchnames = sorted(set(item for item in notes))
+
+        # create a dictionary to map pitches to integers
+        note_to_int = dict((note, number) for number,
+                           note in enumerate(pitchnames))
+        int_to_note = dict((number, note) for number,
+                           note in enumerate(pitchnames))
+
+        return note_to_int, int_to_note
+    
+    @staticmethod
+    def prepare_sequences_single(notes, note_to_int, n_vocab):
+        """ Prepare the sequences used by the Neural Network """
+        sequence_length = 100
+
+        # # get all pitch names
+        # pitchnames = sorted(set(item for item in notes))
+
+        # # create a dictionary to map pitches to integers
+        # note_to_int = dict((note, number) for number,
+        #                    note in enumerate(pitchnames))
+
+        network_input = []
+
+        # create input sequences and the corresponding outputs
+        for i in range(0, len(notes) - sequence_length, 1):
+            sequence_in = notes[i:i + sequence_length]
+            network_input.append([note_to_int[char] for char in sequence_in])
+
+        # reshape the input into a format compatible with LSTM layers
+        n_patterns = len(network_input)
+        network_input = np.reshape(network_input,
+                                   (n_patterns, sequence_length, 1))
+
+        # normalize input between 0 and 1
+        network_input = network_input / float(n_vocab)
+
+        return network_input
 
     @staticmethod
     def generate_notes(model, notes, network_input, n_vocab):
@@ -79,6 +122,33 @@ class Tools:
         int_to_note = dict((number, note) for number,
                            note in enumerate(pitchnames))
 
+        pattern = network_input[start]
+        prediction_output = []
+
+        # generate 500 notes
+        for note_index in range(500):
+            prediction_input = np.reshape(pattern, (1, len(pattern), 1))
+            prediction_input = prediction_input / float(n_vocab)
+            my_input = torch.DoubleTensor(prediction_input.tolist())
+
+            prediction = model(my_input).detach().cpu().numpy()
+
+            index = np.argmax(prediction)
+            result = int_to_note[index]
+            prediction_output.append(result)
+
+            pattern = np.append(pattern, index)
+            pattern = pattern[1:len(pattern)]
+
+        return prediction_output
+
+    @staticmethod
+    def generate_notes_single(model, int_to_note, network_input, n_vocab):
+        """ Generate notes from neural network based on sequence of notes """
+        # pick a random sequence from input as starting point for prediction
+        start = np.random.randint(0, len(network_input)-1)
+
+        # print(len(network_input[0]))
         pattern = network_input[start]
         prediction_output = []
 
@@ -130,7 +200,7 @@ class Tools:
 
         midi_stream = stream.Stream(output_notes)
         midi_stream.write('midi', fp='{}.mid'.format(filename))
-    
+
     @staticmethod
     def to_categorical(y, num_classes):
         """ 1-hot encodes a tensor """

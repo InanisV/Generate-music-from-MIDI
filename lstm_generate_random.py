@@ -1,9 +1,9 @@
 import torch
 from tools import Tools
 
-""" Train a Neural Network to generate music """
+""" Generate the music from a random midi in training set"""
 # Get notes from midi files
-notes = Tools.get_notes()
+notes = Tools.get_notes(Tools.MIDI_path)
 
 # Get the number of pitch names
 n_vocab = len(set(notes))
