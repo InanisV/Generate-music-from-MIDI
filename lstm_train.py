@@ -1,5 +1,4 @@
 import torch
-import numpy as np
 from torch import nn, optim
 from tools import Tools
 from lstm_model import MyLSTM
@@ -26,23 +25,25 @@ my_input = torch.DoubleTensor(network_input)
 # print(my_input)
 my_output = torch.DoubleTensor(network_output)
 dataset = torch.utils.data.TensorDataset(my_input, my_output)
-loader = torch.utils.data.DataLoader(dataset, batch_size=64, shuffle=True)
+loader = torch.utils.data.DataLoader(dataset, batch_size=512, shuffle=True)
 
 # Set up the model
 print(list(my_input.size()))
 model = MyLSTM(n_vocab)
 model = model.double()
+model.to(device)
 criterion = nn.BCELoss()
 optimizer = optim.Adam(model.parameters())
 # history = History()
 
 # Fit the model
-for epoch in range(2):
+for epoch in range(10):
     running_loss = 0.
     running_mae = 0.
 
     for i, data in enumerate(loader):
         inputs, labels = data
+        inputs, labels = inputs.to(device), labels.to(device)
         optimizer.zero_grad()
         print(type(inputs))
         # print(inputs)
@@ -50,7 +51,7 @@ for epoch in range(2):
         print(list(outputs.size()))
         print(list(labels.size()))
         # outputs = outputs[-1].view(*labels.shape)
-        l,n,m = outputs.shape
+        l, n, m = outputs.shape
         outputs = torch.reshape(outputs, (n, m))
         # print(labels[0])
         loss = criterion(outputs, labels)
@@ -70,11 +71,3 @@ model.eval()
 prediction_output = Tools.generate_notes(model, notes,
                                          network_input, len(set(notes)))
 Tools.create_midi(prediction_output, 'pokemon_midi')
-
-# Plot the model losses
-# pd.DataFrame(history.history).plot()
-# plt.savefig('LSTM_Loss_per_Epoch.png', transparent=True)
-# plt.close()
-def cross_entropy_one_hot(input, target):
-    _, labels = target.max(dim=0)
-    return nn.CrossEntropyLoss()(input, labels)
