@@ -16,7 +16,7 @@ class MyLSTM(nn.Module):
         self.dense1 = nn.Linear(1024, 256)
         self.dropout = nn.Dropout(0.3)
         self.dense2 = nn.Linear(256, n_vocab)
-        self.softmax = nn.Softmax()
+        self.softmax = nn.Softmax(dim=2)
 
     def forward(self, x):
 
