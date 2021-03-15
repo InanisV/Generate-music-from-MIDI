@@ -1,6 +1,9 @@
 import glob
 import torch
+import pickle
+import music21
 import numpy as np
+from tqdm import tqdm
 from music21 import converter, instrument, note, chord, stream
 
 
@@ -12,25 +15,33 @@ class Tools:
         """ Get all the notes and chords from the midi files """
         notes = []
 
-        for file in glob.glob(MIDI_path):
-            midi = converter.parse(file)
+        midi_len = len(glob.glob(MIDI_path))
+        _length = midi_len if midi_len <= 1000 else 1000
+        with tqdm(glob.glob(MIDI_path)[:_length], unit="file") as tglob:
+            for file in tglob:
+                tglob.set_postfix(name=file)
+                # print("Parsing %s" % file)
+                try:
+                    midi = converter.parse(file)
+                except (music21.midi.MidiException, IndexError):
+                    continue
 
-            print("Parsing %s" % file)
+                notes_to_parse = None
 
-            notes_to_parse = None
+                try:  # file has instrument parts
+                    s2 = instrument.partitionByInstrument(midi)
+                    notes_to_parse = s2.parts[0].recurse()
+                except Exception:  # file has notes in a flat structure
+                    notes_to_parse = midi.flat.notes
 
-            try:  # file has instrument parts
-                s2 = instrument.partitionByInstrument(midi)
-                notes_to_parse = s2.parts[0].recurse()
-            except Exception:  # file has notes in a flat structure
-                notes_to_parse = midi.flat.notes
-                
-            for element in notes_to_parse:
-                if isinstance(element, note.Note):
-                    notes.append(str(element.pitch))
-                elif isinstance(element, chord.Chord):
-                    notes.append('.'.join(str(n) for n in element.normalOrder))
+                for element in notes_to_parse:
+                    if isinstance(element, note.Note):
+                        notes.append(str(element.pitch))
+                    elif isinstance(element, chord.Chord):
+                        notes.append(
+                            '.'.join(str(n) for n in element.normalOrder))
 
+        print(len(notes))
         return notes
 
     @staticmethod
@@ -67,7 +78,7 @@ class Tools:
                                               max(network_output)+1)
 
         return (network_input, network_output)
-    
+
     @staticmethod
     def get_note_dicts(notes):
         """ Prepare the sequences used by the Neural Network """
@@ -81,7 +92,7 @@ class Tools:
                            note in enumerate(pitchnames))
 
         return note_to_int, int_to_note
-    
+
     @staticmethod
     def prepare_sequences_single(notes, note_to_int, n_vocab):
         """ Prepare the sequences used by the Neural Network """
@@ -148,7 +159,6 @@ class Tools:
         # pick a random sequence from input as starting point for prediction
         start = np.random.randint(0, len(network_input)-1)
 
-        # print(len(network_input[0]))
         pattern = network_input[start]
         prediction_output = []
 
@@ -205,3 +215,13 @@ class Tools:
     def to_categorical(y, num_classes):
         """ 1-hot encodes a tensor """
         return np.eye(num_classes, dtype='float32')[y]
+
+    @staticmethod
+    def save_obj(obj, name):
+        with open(name + '.pkl', 'wb') as f:
+            pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
+
+    @staticmethod
+    def load_obj(name):
+        with open(name + '.pkl', 'rb') as f:
+            return pickle.load(f)

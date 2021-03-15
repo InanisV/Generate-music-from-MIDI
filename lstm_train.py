@@ -1,4 +1,5 @@
 import csv
+import sys
 import torch
 from torch import nn, optim
 from tools import Tools
@@ -13,7 +14,10 @@ device = torch.device("cuda:0" if use_cuda else "cpu")
 
 """ Train a Neural Network to generate music """
 # Get notes from midi files
-notes = Tools.get_notes()
+dataset_name = sys.argv[1]
+# notes = Tools.get_notes("/data1/zhengdao/cs4347/datasets/" +
+#                         dataset_name + "/*.mid")
+notes = Tools.load_obj(f'{dataset_name}_notes')
 
 # Get the number of pitch names
 n_vocab = len(set(notes))
@@ -33,11 +37,11 @@ model = MyLSTM(n_vocab)
 model = model.double()
 model.to(device)
 criterion = nn.BCELoss()
-optimizer = optim.Adam(model.parameters(), lr=0.003)
-scheduler = StepLR(optimizer, step_size=1, gamma=0.98)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+scheduler = StepLR(optimizer, step_size=1, gamma=0.97)
 
 # Fit the model
-with open('Training_log.csv', 'w') as csv_file:
+with open(f'Training_log_{dataset_name}.csv', 'w') as csv_file:
     writer = csv.writer(csv_file)
     writer.writerow(['Epoch', 'BCELoss', 'LearningRate'])
     for epoch in range(200):
@@ -66,13 +70,13 @@ with open('Training_log.csv', 'w') as csv_file:
         # torch.save(model, 'lstm_pretrained.pt')
 
 model_cpu = model.cpu()
-torch.save(model, 'lstm_pretrained.pt')
+torch.save(model, f'lstm_pretrained_{dataset_name}.pt')
 print('Finish training :)')
 
 # Use the model to generate a midi
-model = torch.load('lstm_pretrained.pt')
+model = torch.load(f'lstm_pretrained_{dataset_name}.pt')
 model.eval()
 prediction_output = Tools.generate_notes(model, notes,
                                          network_input, len(set(notes)))
-Tools.create_midi(prediction_output, 'pokemon_midi')
+Tools.create_midi(prediction_output, f'{dataset_name}_midi')
 print('Finish generating :D')
