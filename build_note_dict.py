@@ -4,8 +4,7 @@ from tools import Tools
 """ Build and save note dictionarys """
 # Get notes from midi files
 dataset_name = sys.argv[1]
-notes = Tools.get_notes("/data1/zhengdao/cs4347/datasets/" +
-                        dataset_name + "/*.mid")
+notes = Tools.get_notes(dataset_name + "/*.mid")
 
 Tools.save_obj(notes, f'{dataset_name}_notes')
 
