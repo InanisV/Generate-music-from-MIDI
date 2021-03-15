@@ -15,8 +15,6 @@ device = torch.device("cuda:0" if use_cuda else "cpu")
 """ Train a Neural Network to generate music """
 # Get notes from midi files
 dataset_name = sys.argv[1]
-# notes = Tools.get_notes("/data1/zhengdao/cs4347/datasets/" +
-#                         dataset_name + "/*.mid")
 notes = Tools.load_obj(f'{dataset_name}_notes')
 
 # Get the number of pitch names
