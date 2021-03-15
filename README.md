@@ -1,5 +1,8 @@
 # Generate-music-from-MIDI
 
+[![hackmd-github-sync-badge](https://hackmd.io/Q_vsTH7ISTGCb3jv_k16XQ/badge)](https://hackmd.io/Q_vsTH7ISTGCb3jv_k16XQ)
+
+
 Use LSTM to generate music from MIDI file in PyTorch, and convert the trained model to CoreML.
 
 ## Requirements
@@ -31,7 +34,7 @@ Converting (on macOX):
     - This stage loads notes from .pkl and start training.
 
 4. Generate
-    - `python3 lstm_generate_single.py`
+    - `python3 lstm_generate_single.py classicMIDI`
     - predict music from a single midi
     - This stage loads pre-trained model and dictionaries, and does prediction.
 
