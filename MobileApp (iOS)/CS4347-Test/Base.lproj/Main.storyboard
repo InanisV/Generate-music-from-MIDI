@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CS4347_Test" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected MIDI:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mxi-X6-xWv">
+                                <rect key="frame" x="119.5" y="88" width="175" height="33.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0qE-qz-1do">
+                                <rect key="frame" x="203" y="129.5" width="8" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NY6-na-WGN">
+                                <rect key="frame" x="175" y="299.5" width="64" height="23.5"/>
+                                <state key="normal" title="Select" image="hand.point.up.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="selectBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OXO-mR-jmt"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jzD-cB-KNd">
+                                <rect key="frame" x="161" y="435.5" width="92" height="25"/>
+                                <state key="normal" title="Download" image="square.and.arrow.down.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="getBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fRr-l6-7vo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bHi-74-w6P">
+                                <rect key="frame" x="176" y="367" width="62" height="24.5"/>
+                                <state key="normal" title="Send" image="paperplane.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="postBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ci0-yr-FMc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GBc-W4-QYV">
+                                <rect key="frame" x="183.5" y="504.5" width="47.5" height="20.5"/>
+                                <state key="normal" title="Play" image="play.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="playBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1Uc-vV-s8c"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="be7-IP-0jX">
+                                <rect key="frame" x="165" y="166" width="84" height="33.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SQ5-Zm-Bpd">
+                                <rect key="frame" x="178.5" y="569" width="57" height="24"/>
+                                <state key="normal" title="Stop" image="stop.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="playBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jw2-r7-C6q"/>
+                                    <action selector="stopBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lhl-bu-Lxr"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="san-Yx-gNH">
+                                <rect key="frame" x="203" y="203.5" width="8" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="Uyr-rb-bJB">
+                                <rect key="frame" x="112" y="621" width="190" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2L-nu-hbP">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="30"/>
+                                        <state key="normal" title="Synth"/>
+                                        <connections>
+                                            <action selector="synthBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HK6-eU-yuf"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xxx-Ue-A4W">
+                                        <rect key="frame" x="62" y="0.0" width="68" height="30"/>
+                                        <state key="normal" title="AmongUs"/>
+                                        <connections>
+                                            <action selector="amongUsBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tUG-dG-znA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTz-Zl-A1p">
+                                        <rect key="frame" x="152" y="0.0" width="38" height="30"/>
+                                        <state key="normal" title="Piano"/>
+                                        <connections>
+                                            <action selector="pianoBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OrT-UD-4Fh"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="be7-IP-0jX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0I5-Il-OSe"/>
+                            <constraint firstItem="0qE-qz-1do" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5dF-xP-gL9"/>
+                            <constraint firstItem="jzD-cB-KNd" firstAttribute="top" secondItem="bHi-74-w6P" secondAttribute="bottom" constant="44" id="7f7-2b-gZt"/>
+                            <constraint firstItem="jzD-cB-KNd" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="BSj-vc-sjB"/>
+                            <constraint firstItem="be7-IP-0jX" firstAttribute="top" secondItem="0qE-qz-1do" secondAttribute="bottom" constant="16" id="EKy-Ki-pt2"/>
+                            <constraint firstItem="NY6-na-WGN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MZJ-ou-uMr"/>
+                            <constraint firstItem="Mxi-X6-xWv" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="44" id="PnY-np-1RZ"/>
+                            <constraint firstItem="Uyr-rb-bJB" firstAttribute="top" secondItem="SQ5-Zm-Bpd" secondAttribute="bottom" constant="28" id="ScN-aF-9xQ"/>
+                            <constraint firstItem="san-Yx-gNH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ucn-as-sbi"/>
+                            <constraint firstItem="bHi-74-w6P" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="doR-yZ-gBg"/>
+                            <constraint firstItem="bHi-74-w6P" firstAttribute="top" secondItem="NY6-na-WGN" secondAttribute="bottom" constant="44" id="gBJ-kQ-Mbe"/>
+                            <constraint firstItem="jzD-cB-KNd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iby-6q-qPQ"/>
+                            <constraint firstItem="Mxi-X6-xWv" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iog-9v-Ckl"/>
+                            <constraint firstItem="san-Yx-gNH" firstAttribute="top" secondItem="be7-IP-0jX" secondAttribute="bottom" constant="4" id="jLf-qE-ecW"/>
+                            <constraint firstItem="SQ5-Zm-Bpd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jOp-OV-4Gt"/>
+                            <constraint firstItem="0qE-qz-1do" firstAttribute="top" secondItem="Mxi-X6-xWv" secondAttribute="bottom" constant="8" id="l8H-Tl-hR9"/>
+                            <constraint firstItem="GBc-W4-QYV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qnI-0A-ddw"/>
+                            <constraint firstItem="GBc-W4-QYV" firstAttribute="top" secondItem="jzD-cB-KNd" secondAttribute="bottom" constant="44" id="rhT-9P-Gf0"/>
+                            <constraint firstItem="SQ5-Zm-Bpd" firstAttribute="top" secondItem="GBc-W4-QYV" secondAttribute="bottom" constant="44" id="yE5-0W-0X6"/>
+                            <constraint firstItem="Uyr-rb-bJB" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zNw-8j-K2q"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="midiLabel" destination="0qE-qz-1do" id="nZ6-Tv-5IE"/>
+                        <outlet property="statusLabel" destination="san-Yx-gNH" id="iXC-kd-vGv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-364" y="34"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="hand.point.up.fill" catalog="system" width="111" height="128"/>
+        <image name="paperplane.fill" catalog="system" width="128" height="118"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="square.and.arrow.down.fill" catalog="system" width="121" height="128"/>
+        <image name="stop.circle.fill" catalog="system" width="128" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
