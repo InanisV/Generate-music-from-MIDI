@@ -1,4 +1,4 @@
-# Compose iOS App
+# Composer iOS App
 
 Mobile App that downloads and plays back MIDI files generated from the Cloud Server.
 
