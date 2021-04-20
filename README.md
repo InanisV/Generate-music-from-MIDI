@@ -31,7 +31,7 @@ Dependencies required: gunicorn3, Flask
 
 2) SSH into EC2 instance through Ubuntu (for example). More details can be found on the [AWS website](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html).
 
-3) Update nginx configuration by first executing `cd /etc/nginx/sites-enabled` then copy the `flaskapp` file to the current working directory. Update server_name variable to the public IPv4 DNS of the EC2 instance (can be found on AWS console).
+3) Update nginx configuration by first entering `cd /etc/nginx/sites-enabled` then copy the `flaskapp` file to the current working directory. Update server_name variable to the public IPv4 DNS of the EC2 instance (can be found on AWS console). Enter `sudo service nginx restart` in the shell after updating server_name variable.
 
 4) cd to application folder (where app.py is located)
 
