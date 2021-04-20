@@ -1,0 +1,9 @@
+  server {
+    listen 80;
+    server_name ec2-54-169-251-110.ap-southeast-1.compute.amazonaws.com;
+    # server_name is dynamic depending on EC2 instance
+
+    location / {
+        proxy_pass http://127.0.0.1:8000;
+    }
+  }
